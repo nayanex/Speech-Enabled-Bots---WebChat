@@ -32,37 +32,42 @@
     <script>
         // Create a function to fetch the Cognitive Services Speech Services credentials.
         // The async function created will hold expiration information about the token and will return cached token when possible.
-        // function createFetchSpeechServicesCredentials() {
-        //     let expireAfter = 0;
-        //     let lastPromise;
+        function createFetchSpeechServicesCredentials() {
+            let expireAfter = 0;
+            let lastPromise;
 
-        //     return () => {
-        //         const now = Date.now();
+            return () => {
+                const now = Date.now();
 
-        //         // Fetch a new token if the existing one is expiring.
-        //         // The following article mentioned the token is only valid for 10 minutes.
-        //         // We will invalidate the token after 5 minutes.
-        //         // https://docs.microsoft.com/en-us/azure/cognitive-services/authentication#authenticate-with-an-authentication-token
-        //         if (now > expireAfter) {
-        //             expireAfter = now + 300000;
-        //             lastPromise = fetch(
-        //                 'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
-        //                 { method: 'POST', headers: { 'Ocp-Apim-Subscription-Key': '96ae6b6f340641d6a2e7bde567c16099' } }
-        //             ).then(
-        //                 res => res.json(),
-        //                 err => {
-        //                     expireAfter = 0;
+                // Fetch a new token if the existing one is expiring.
+                // The following article mentioned the token is only valid for 10 minutes.
+                // We will invalidate the token after 5 minutes.
+                // https://docs.microsoft.com/en-us/azure/cognitive-services/authentication#authenticate-with-an-authentication-token
+                if (now > expireAfter) {
+                    expireAfter = now + 300000;
+                    lastPromise = fetch(
+                        'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Ocp-Apim-Subscription-Key': '96ae6b6f340641d6a2e7bde567c16099'
+                            }
+                        }
+                    ).then(
+                        // res => res.json(),
+                        err => {
+                            expireAfter = 0;
+                            return Promise.reject(err);
+                        }
+                    );
+                }
 
-        //                     return Promise.reject(err);
-        //                 }
-        //             );
-        //         }
+                return lastPromise;
+            };
+        }
 
-        //         return lastPromise;
-        //     };
-        // }
-
-        // const fetchSpeechServicesCredentials = createFetchSpeechServicesCredentials();
+        const fetchSpeechServicesCredentials = createFetchSpeechServicesCredentials();
 
         (async function () {
             // In this demo, we are using Direct Line token from MockBot.
@@ -70,35 +75,21 @@
             // Tokens are more secure. To learn about the differences between secrets and tokens.
             // and to understand the risks associated with using secrets, visit https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0
             // A94TMZRjoRE.n_6pJjxTepLWFCbcZ-zg_DaOo19RmvXLwyAFd6pH-iQ
-            const res = await fetch('https://directline.botframework.com/v3/directline/tokens/generate',
-                { method: 'POST', headers: { Authorization: 'Bearer 2tJtdxAKRwo.EDJ-JSz2e3Y0IQB0hzuUjKTRkP_Y05jF_uNbOMdiuQc' } });
+            const res = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', {
+                method: 'POST',
+                headers:
+                {
+                    Authorization: 'Bearer 2tJtdxAKRwo.EDJ-JSz2e3Y0IQB0hzuUjKTRkP_Y05jF_uNbOMdiuQc'
+                }
+            });
 
             const { token } = await res.json();
 
-            //Service to fetch speech token
-            const getSpeechToken = async (credentials = {}) => {
-                const response = await fetch(`https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken`, {
-                    method: 'POST',
-                    headers:
-                    {
-                        //Keys the cognitive service
-                        'Ocp-Apim-Subscription-Key': '96ae6b6f340641d6a2e7bde567c16099'
-                    }
-                });
-                if (response.status === 200) {
-                    const { authorizationToken, region } = await response.json();
-                    credentials['authorizationToken'] = authorizationToken;
-                    credentials['region'] = region;
-                    return credentials;
-                } else {
-                    console.log('error')
-                }
-            }
             // Create the ponyfill factory function, which can be called to create a concrete implementation of the ponyfill.
             const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory({
                 // We are passing the Promise function to the "credentials" field.
                 // This function will be called every time the token is being used.
-                credentials: await getSpeechToken()
+                credentials: fetchSpeechServicesCredentials
             });
 
             // Pass a Web Speech ponyfill factory to renderWebChat.

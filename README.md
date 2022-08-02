@@ -135,3 +135,33 @@ View the list of [available Web Chat samples](https://github.com/microsoft/BotFr
 
 https://docs.microsoft.com/en-gb/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0
 
+## Resources
+
+https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0&preserve-view=true
+
+https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/tutorial-voice-enable-your-bot-speech-sdk
+
+https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/rest-text-to-speech
+
+https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-services-private-link?tabs=portal
+
+https://docs.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell
+
+https://docs.microsoft.com/en-us/previous-versions/azure/bot-service/bot-service-channel-connect-webchat?view=azure-bot-service-3.0#step-1
+
+https://docs.microsoft.com/en-gb/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-send-activity?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-gb/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-start-conversation?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-gb/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-receive-activities?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-directline?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-directline-extension-webchat-client?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-api-reference?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-pattern-embed-app?view=azure-bot-service-4.0
+
+https://docs.microsoft.com/en-gb/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-concepts?view=azure-bot-service-4.0
+
